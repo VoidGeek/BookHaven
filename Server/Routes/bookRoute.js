@@ -83,25 +83,44 @@ bookRouter.get(
 );
 
 // Search by title
+// Search by title, author, genre, and published year
 bookRouter.get(
   '/',
   asyncHandler(async (req, res) => {
     try {
-      const { title } = req.query;
+      const { title, author, genre, published_year } = req.query;
       let books;
 
+      // Create a query object to filter based on provided criteria
+      const query = {};
+
       if (title) {
-        // If a title query parameter is provided, search by title
-        books = await book.find({
-          title: {
-            $regex: title,
-            $options: 'i',
-          },
-        });
-      } else {
-        // If no title query parameter is provided, fetch all books
-        books = await book.find();
+        query.title = {
+          $regex: title,
+          $options: 'i',
+        };
       }
+
+      if (author) {
+        query.author = {
+          $regex: author,
+          $options: 'i',
+        };
+      }
+
+      if (genre) {
+        query.genre = {
+          $regex: genre,
+          $options: 'i',
+        };
+      }
+
+      if (published_year) {
+        query.published_year = published_year;
+      }
+
+      // Find books that match the criteria
+      books = await book.find(query);
 
       if (books) {
         res.status(200).json(books);
@@ -113,5 +132,6 @@ bookRouter.get(
     }
   })
 );
+
 
 module.exports = { bookRouter };

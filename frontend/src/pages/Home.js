@@ -6,8 +6,13 @@ import { useParams } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 const Home = () => {
-  const [books, setBooks] = useState("");
-  const [searchQuery, setSearchQuery] = useState('');
+  const [books, setBooks] = useState([]);
+  const [searchQuery, setSearchQuery] = useState({
+    title: '',
+    author: '',
+    genre: '',
+    published_year: '',
+  });
   const [hoveredCard, setHoveredCard] = useState(null);
 
   useEffect(() => {
@@ -28,10 +33,16 @@ const Home = () => {
   };
 
   const fetchBooks = () => {
+    const { title, author, genre, published_year } = searchQuery;
+    const encodedTitle = encodeURIComponent(title);
+    const encodedAuthor = encodeURIComponent(author);
+    const encodedGenre = encodeURIComponent(genre);
+    const encodedPublishedYear = encodeURIComponent(published_year);
+  
     axios
-      .get(`http://localhost:4000/api/books?title=${searchQuery}`)
+      .get(`http://localhost:4000/api/books?title=${encodedTitle}&author=${encodedAuthor}&genre=${encodedGenre}&published_year=${encodedPublishedYear}`)
       .then((response) => {
-        setBooks(response.data);
+        setBooks(response.data); // Update books state with the response data
       })
       .catch((error) => {
         console.error(error);
@@ -58,23 +69,48 @@ const Home = () => {
         <form className="d-flex" onSubmit={(e) => searchHandler(e)}>
           <input
             type="search"
-            name=""
-            id=""
-            placeholder="Search for books.."
+            name="title"
+            placeholder="Search by Title"
             className="form-control"
-            value={searchQuery} // Add value attribute to input field
-            onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery state
+            value={searchQuery.title}
+            onChange={(e) => setSearchQuery({ ...searchQuery, title: e.target.value })}
           />
-          <button type="submit" className='btn btn-outline-dark'>Search</button> 
+          <input
+            type="search"
+            name="author"
+            placeholder="Search by Author"
+            className="form-control"
+            value={searchQuery.author}
+            onChange={(e) => setSearchQuery({ ...searchQuery, author: e.target.value })}
+          />
+          <input
+            type="search"
+            name="genre"
+            placeholder="Search by Genre"
+            className="form-control"
+            value={searchQuery.genre}
+            onChange={(e) => setSearchQuery({ ...searchQuery, genre: e.target.value })}
+          />
+          <input
+            type="search"
+            name="published_year"
+            placeholder="Search by Published Year"
+            className="form-control"
+            value={searchQuery.published_year}
+            onChange={(e) => setSearchQuery({ ...searchQuery, published_year: e.target.value })}
+          />
+          <button type="submit" className="btn btn-outline-dark">
+            Search
+          </button>
         </form>
         <br />
-        {!books ? (
+        {books.length === 0 ? (
           <p>No books found!</p>
         ) : (
           <div className="row">
             {books.map((book) => (
               <div
-                key={book.id}
+                key={book._id}
                 className="col-md-4"
                 onMouseEnter={() => handleCardMouseEnter(book._id)}
                 onMouseLeave={handleCardMouseLeave}
@@ -88,9 +124,15 @@ const Home = () => {
                   <img src={book.image} alt="Book cover" className="card-img-top" />
                   <div className="card-body">
                     <h3 className="card-title">{book.title}</h3>
-                    <p className="card-text"><b>Author:</b> {book.author}</p>
-                    <p className="card-text"><b>Genre:</b> {book.genre}</p>
-                    <p className="card-text"><b>Publication Year:</b> {book.published_year}</p>
+                    <p className="card-text">
+                      <b>Author:</b> {book.author}
+                    </p>
+                    <p className="card-text">
+                      <b>Genre:</b> {book.genre}
+                    </p>
+                    <p className="card-text">
+                      <b>Publication Year:</b> {book.published_year}
+                    </p>
                     <Link to={{ pathname: `/details/${userId}/${book._id}` }} className="btn bg-dark text-white">
                       More info
                     </Link>
