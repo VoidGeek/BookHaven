@@ -32,7 +32,7 @@ const Details = () => {
         alignItems: 'center', // Center content horizontally
         justifyContent: 'center', // Center content vertically
         minHeight: '50vh', // Ensure the container takes the full viewport height
-        width: '30%', // Ensure the container takes the full width
+        minwidth: '30%', // Ensure the container takes the full width
       };
       
 
