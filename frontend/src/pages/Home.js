@@ -17,7 +17,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchBooks();
-  }, []); // Empty dependency array to run fetchBooks only once on mount
+  }, [searchQuery]); // Dependency on searchQuery, so it triggers fetchBooks when searchQuery changes
 
   const params = useParams();
   let userId = params.user;
@@ -38,9 +38,11 @@ const Home = () => {
     const encodedAuthor = encodeURIComponent(author);
     const encodedGenre = encodeURIComponent(genre);
     const encodedPublishedYear = encodeURIComponent(published_year);
-  
+
     axios
-      .get(`http://localhost:4000/api/books?title=${encodedTitle}&author=${encodedAuthor}&genre=${encodedGenre}&published_year=${encodedPublishedYear}`)
+      .get(
+        `http://localhost:4000/api/books?title=${encodedTitle}&author=${encodedAuthor}&genre=${encodedGenre}&published_year=${encodedPublishedYear}`
+      )
       .then((response) => {
         setBooks(response.data); // Update books state with the response data
       })
@@ -51,7 +53,7 @@ const Home = () => {
 
   const searchHandler = (e) => {
     e.preventDefault();
-    fetchBooks(); // Trigger a new fetch when the search form is submitted
+    // No need to call fetchBooks here since it will be triggered automatically by the useEffect
   };
 
   const handleCardMouseEnter = (bookId) => {

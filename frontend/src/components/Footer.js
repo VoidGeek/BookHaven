@@ -44,7 +44,7 @@ const Footer = () => {
             <ul className="list-unstyled">
               <li>
                 <a
-                  href="https://github.com/VoidGeek/Final_Milestone/tree/master"
+                  href="https://github.com/VoidGeek/BookHaven/tree/master"
                   target="_blank"
                   rel="noopener noreferrer"
                   style={plainTextLinkStyle}

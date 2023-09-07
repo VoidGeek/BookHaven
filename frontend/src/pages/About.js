@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Accordion from 'react-bootstrap/Accordion';
@@ -17,6 +17,12 @@ const About = () => {
     position: 'relative',
     top: '0.2em',
     left: '0.3em',
+  };
+
+  const [activeKey, setActiveKey] = useState(null);
+
+  const handleAccordionHover = (eventKey) => {
+    setActiveKey(eventKey === activeKey ? null : eventKey);
   };
 
   return (
@@ -54,21 +60,21 @@ const About = () => {
         </nav>
 
         <h1 className='text-center text-success text-capitalize my-5'>About BookHaven</h1>
-        <Accordion defaultActiveKey="0">
+        <Accordion activeKey={activeKey}>
           <Accordion.Item eventKey="0">
-            <Accordion.Header>Who Are We?</Accordion.Header>
+            <Accordion.Header onMouseEnter={() => handleAccordionHover('0')}>Who Are We?</Accordion.Header>
             <Accordion.Body>
               <strong>Founders</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="1">
-            <Accordion.Header>What You Can Expect?</Accordion.Header>
+            <Accordion.Header onMouseEnter={() => handleAccordionHover('1')}>What You Can Expect?</Accordion.Header>
             <Accordion.Body>
               <strong>Books of Various Genres</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="2">
-            <Accordion.Header>Frequently Asked Questions (FAQs)</Accordion.Header>
+            <Accordion.Header onMouseEnter={() => handleAccordionHover('2')}>Frequently Asked Questions (FAQs)</Accordion.Header>
             <Accordion.Body>
               <strong>How Can I Add a Book to My Library?</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<br />
               <strong>Who Can See My Library?</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<br />
@@ -76,20 +82,20 @@ const About = () => {
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="3">
-            <Accordion.Header>Help</Accordion.Header>
+            <Accordion.Header onMouseEnter={() => handleAccordionHover('3')}>Help</Accordion.Header>
             <Accordion.Body>
               <strong>How to Save My Progress?</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="4">
-            <Accordion.Header>Associate Partners</Accordion.Header>
+            <Accordion.Header onMouseEnter={() => handleAccordionHover('4')}>Associate Partners</Accordion.Header>
             <Accordion.Body>
               <strong>Partner 1</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<br />
               <strong>Partner 2</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="5">
-            <Accordion.Header>Settings</Accordion.Header>
+            <Accordion.Header onMouseEnter={() => handleAccordionHover('5')}>Settings</Accordion.Header>
             <Accordion.Body>
               <strong>Login/Signup</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.<br />
               <strong>Change Password</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

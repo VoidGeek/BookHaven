@@ -27,7 +27,14 @@ const Details = () => {
         backgroundColor: '#f7f7f7', // Background color
         padding: '20px', // Padding around the content
         borderRadius: '4px', // Rounded corners
-    };
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center', // Center content horizontally
+        justifyContent: 'center', // Center content vertically
+        minHeight: '50vh', // Ensure the container takes the full viewport height
+        width: '30%', // Ensure the container takes the full width
+      };
+      
 
     const headerStyle = {
         backgroundColor: '#3498db', // Header background color (blue)
@@ -50,6 +57,13 @@ const Details = () => {
 
     const detailsStyle = {
         marginTop: '20px', // Margin at the top of book details
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start', // Align content to the left
+    };
+
+    const detailItemStyle = {
+        marginBottom: '5px', // Margin between detail items
     };
 
     const buttonStyle = {
@@ -74,7 +88,7 @@ const Details = () => {
                 </ul>
             </nav>
 
-            <div className="container" style={containerStyle}>
+            <div className="container mt-5" style={containerStyle}>
                 {bookData && (
                     <>
                         <div className="header" style={headerStyle}>
@@ -82,9 +96,9 @@ const Details = () => {
                         </div>
                         <img src={bookData.image} alt="" className="book-image mt-2" style={imageStyle} />
                         <div className="book-details" style={detailsStyle}>
-                            <p><strong>Author:</strong> {bookData.author}</p>
-                            <p><strong>Genre:</strong> {bookData.genre}</p>
-                            <p><strong>Publication Year:</strong> {bookData.published_year}</p>
+                            <p style={detailItemStyle}><strong>Author:</strong> {bookData.author}</p>
+                            <p style={detailItemStyle}><strong>Genre:</strong> {bookData.genre}</p>
+                            <p style={detailItemStyle}><strong>Publication Year:</strong> {bookData.published_year}</p>
                             {/* Add more book details here if needed */}
                         </div>
                     </>
